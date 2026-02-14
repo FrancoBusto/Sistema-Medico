@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="MedicalSystem.API/MedicalSystem.API.csproj" Id="2573f0a2-bf43-40ca-b839-461e2f384a0d" />
+  <Project Path="MedicalSystem.Application/MedicalSystem.Application.csproj" Id="262fb23d-a493-482a-aed7-5e33c6112dd2" />
+  <Project Path="MedicalSystem.Domain/MedicalSystem.Domain.csproj" />
+  <Project Path="MedicalSystem.Infrastructure/MedicalSystem.Infrastructure.csproj" />
+</Solution>
