@@ -18,19 +18,19 @@ public class Appointment : EntityBase
 
     private Appointment() { }
 
-    public Appointment(DateTime date, Guid doctorId, Guid patientId)
+    public Appointment(DateTime scheduleDate, Guid doctorId, Guid patientId)
     {
-        ValidateData(date, doctorId, patientId);
+        ValidateData(scheduleDate, doctorId, patientId);
 
-        ScheduledDate = date;
+        ScheduledDate = scheduleDate;
         Status = AppointmentStatus.Scheduled;
         DoctorId = doctorId;
         PatientId = patientId;
     }
 
-    private void ValidateData(DateTime date, Guid doctorId, Guid patientId)
+    private void ValidateData(DateTime scheduleDate, Guid doctorId, Guid patientId)
     {
-        if (date < DateTime.UtcNow)
+        if (scheduleDate < DateTime.UtcNow)
             throw new ArgumentException("No es posible generar un turno en el pasado");
 
         if (doctorId == Guid.Empty)
