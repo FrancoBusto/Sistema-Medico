@@ -39,5 +39,7 @@ public class DoctorConfiguration : IEntityTypeConfiguration<Doctor>
         builder.HasMany(d => d.Specialties)
             .WithMany(s => s.Doctors)
             .UsingEntity(j => j.ToTable("DoctorSpecialties"));
+
+        builder.HasQueryFilter(d => d.IsActive);
     }
 }
