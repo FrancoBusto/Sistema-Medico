@@ -1,4 +1,7 @@
+using MedicalSystem.Application.Services;
+using MedicalSystem.Domain.Interfaces;
 using MedicalSystem.Infrastructure.Persistence;
+using MedicalSystem.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,7 +22,12 @@ builder.Services.AddAutoMapper(cfg =>
     cfg.AddMaps(typeof(MedicalSystem.Application.Mappings.DoctorProfile).Assembly);
 });
 
+builder.Services.AddScoped(typeof(IRepository<>), typeof(BaseRepository<>));
+builder.Services.AddScoped<IDoctorService, DoctorService>();
+
 var app = builder.Build();
+
+app.UseMiddleware<MedicalSystem.API.Middlewares.ExceptionMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {

@@ -29,12 +29,7 @@ public class DoctorService : IDoctorService
 
     public async Task<DoctorDto> GetByIdAsync(Guid id)
     {
-        var doctor = await _repository.GetByIdAsync(id);
-
-        if(doctor == null)
-        {
-            throw new KeyNotFoundException($"No se encontró ningún doctor con el ID: {id}");
-        }
+        var doctor = await GetDoctorOrThrowAsync(id);
 
         return _mapper.Map<DoctorDto>(doctor);
     }
@@ -49,12 +44,7 @@ public class DoctorService : IDoctorService
 
     public async Task UpdateAsync(Guid id, UpdateDoctorDto updateDoctorDto)
     {
-        var doctor = await _repository.GetByIdAsync(id);
-
-        if(doctor == null)
-        {
-            throw new KeyNotFoundException($"No se encontró ningún doctor con el ID: {id}");
-        }
+        var doctor = await GetDoctorOrThrowAsync(id);
 
         doctor.Update(updateDoctorDto.FirstName, updateDoctorDto.LastName, updateDoctorDto.LicenseNumber, updateDoctorDto.PhoneNumber);
 
@@ -63,15 +53,20 @@ public class DoctorService : IDoctorService
 
     public async Task DeleteAsync(Guid id)
     {
-        var doctor = await _repository.GetByIdAsync(id);
-
-        if (doctor == null)
-        {
-            throw new KeyNotFoundException($"No se encontró ningún doctor con el ID: {id}");
-        }
+        var doctor = await GetDoctorOrThrowAsync(id);
 
         doctor.Deactivate();
 
         await _repository.UpdateAsync(doctor);
+    }
+
+    private async Task<Doctor> GetDoctorOrThrowAsync(Guid id)
+    {
+        var doctor = await _repository.GetByIdAsync(id);
+
+        if (doctor == null)
+            throw new KeyNotFoundException($"No se encontró ningún doctor con el ID: {id}");
+
+        return doctor;
     }
 }
