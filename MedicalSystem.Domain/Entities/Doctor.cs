@@ -46,21 +46,28 @@ public class Doctor : EntityBase
     private void ValidateData(string firstName, string lastName, string nationalId, string licenseNumber, string phoneNumber)
     {
         if (string.IsNullOrWhiteSpace(firstName))
-            throw new ArgumentNullException(nameof(firstName), "El nombre es obligatorio");
+            throw new ArgumentException("El nombre es obligatorio", nameof(firstName));
+        if (firstName.Length > 50)
+            throw new ArgumentException("El nombre no puede exceder los 50 caracteres");
 
         if (string.IsNullOrWhiteSpace(lastName))
-            throw new ArgumentNullException(nameof(lastName), "El apellido es obligatorio");
+            throw new ArgumentException("El apellido es obligatorio", nameof(lastName));
+        if (lastName.Length > 50)
+            throw new ArgumentException("El apellido no puede exceder los 50 caracteres");
 
         if (string.IsNullOrWhiteSpace(nationalId))
-            throw new ArgumentException("El DNI es obligatorio");
-
-        if (nationalId.Length < 7 || !nationalId.All(char.IsDigit))
-            throw new ArgumentException("El DNI no es valido");
+            throw new ArgumentException("El DNI es obligatorio", nameof(nationalId));
+        if (nationalId.Length < 7 || nationalId.Length > 8 || !nationalId.All(char.IsDigit))
+            throw new ArgumentException("El DNI debe contener solo números y tener entre 7 u 8 dígitos");
 
         if (string.IsNullOrWhiteSpace(licenseNumber))
-            throw new ArgumentNullException(nameof(licenseNumber), "El número de licencia es obligatorio");
+            throw new ArgumentException("El número de licencia es obligatorio", nameof(licenseNumber));
+        if (licenseNumber.Length < 4)
+            throw new ArgumentException("La matrícula debe contener al menos 4 caracteres");
 
         if (string.IsNullOrWhiteSpace(phoneNumber))
-            throw new ArgumentNullException(nameof(phoneNumber), "El número de teléfono es obligatorio");
+            throw new ArgumentException("El número de teléfono es obligatorio", nameof(phoneNumber));
+        if (!phoneNumber.All(c => char.IsDigit(c) || c == '+'))
+            throw new ArgumentException("El formato del número de teléfono no es válido");
     }
 }

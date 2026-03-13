@@ -17,18 +17,18 @@ public static class DoctorDtos
         );
 
     public record CreateDoctorDto(
-        [Required] string FirstName,
-        [Required] string LastName,
-        [Required] string NationalId,
-        [Required] string LicenseNumber,
-        [Required] string PhoneNumber
+        string FirstName,
+        string LastName,
+        string NationalId,
+        string LicenseNumber,
+        string PhoneNumber
         );
 
     public record UpdateDoctorDto(
         Guid Id,
-        [Required] string FirstName,
-        [Required] string LastName,
-        [Required] string LicenseNumber,
-        [Required] string PhoneNumber
+        string FirstName,
+        string LastName,
+        string LicenseNumber,
+        string PhoneNumber
         );
 }

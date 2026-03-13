@@ -1,13 +1,19 @@
+using FluentValidation;
 using MedicalSystem.Application.Services;
+using MedicalSystem.Application.Validators.Doctor;
 using MedicalSystem.Domain.Interfaces;
 using MedicalSystem.Infrastructure.Persistence;
 using MedicalSystem.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateDoctorDtoValidator>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
